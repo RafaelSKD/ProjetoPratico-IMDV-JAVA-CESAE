@@ -2,12 +2,24 @@ package pages;
 
 import java.util.Scanner;
 
-import static utils.consoleCleaner.cleanConsole;
+import static utils.console.cleanConsole;
+import static utils.console.stop;
 
 public class welcomePage {
+    /**
+     * Main method used to launch the application by displaying the welcome screen for testing.
+     *
+     * @param args command-line arguments (not used)
+     */
     public static void main(String[] args) {
         welcome();
     }
+
+    /**
+     * Displays the welcome screen with an ASCII art banner and waits for user input to continue.
+     *
+     * This method serves as an entry point to greet the user before navigating to the main menu.
+     */
     public static void welcome() {
         Scanner input = new Scanner(System.in);
         cleanConsole();
@@ -32,7 +44,6 @@ public class welcomePage {
                         " |___|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|___| \n" +
                         "(_____)                                                                     (_____)\n"
         );
-        System.out.print("\n\nPrecionar qualquer tecla para continuar...  ");  // Wait for user input to continue.
-        input.next();
+        stop();                                                                      // waits for user input to continue
     }
 }

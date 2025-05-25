@@ -5,14 +5,19 @@ import java.util.Scanner;
 import static utils.console.cleanConsole;
 import static utils.console.stop;
 
+/**
+ * This class displays the welcome screen of the application.
+ * It provides an ASCII-art based visual greeting before the user navigates further.
+ */
 public class welcomePage {
+
     /**
      * Main method used to launch the application by displaying the welcome screen for testing.
      *
      * @param args command-line arguments (not used)
      */
     public static void main(String[] args) {
-        welcome();
+        welcome(); // Call welcome screen
     }
 
     /**
@@ -21,9 +26,8 @@ public class welcomePage {
      * This method serves as an entry point to greet the user before navigating to the main menu.
      */
     public static void welcome() {
-        Scanner input = new Scanner(System.in);
-        cleanConsole();
-        System.out.print(  // welcome page
+        cleanConsole(); // Clears the console before showing the banner
+        System.out.print(  // Displays the ASCII art welcome banner
                 " _____                                                                       _____ \n" +
                         "( ___ )                                                                     ( ___ )\n" +
                         " |   |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|   | \n" +
@@ -44,6 +48,6 @@ public class welcomePage {
                         " |___|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|___| \n" +
                         "(_____)                                                                     (_____)\n"
         );
-        stop();                                                                      // waits for user input to continue
+        stop(); // Waits for user to press enter before continuing (pause for transition)
     }
 }

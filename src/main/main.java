@@ -3,10 +3,11 @@ package main;
 import java.io.FileNotFoundException;
 
 import static menus.login.loginMenu;
-import static menus.loginMenuDispacher.loginDispacher;
+import static menus.loginMenuDispatcher.loginDispatcher;
 import static pages.welcomePage.welcome;
 
-public class main {
+public class
+main {
     /**
      * Main method that starts the application by displaying the welcome screen and
      * directing the user to the appropriate login flow (admin or client).
@@ -16,7 +17,7 @@ public class main {
      */
     public static void main(String[] args) throws FileNotFoundException {
         welcome();
-        loginDispacher(loginMenu());
+        loginDispatcher(loginMenu());
     }
 
     /**
@@ -30,6 +31,6 @@ public class main {
 
     public static void secondMain() throws FileNotFoundException {
         welcome();
-        loginDispacher(loginMenu());
+        loginDispatcher(loginMenu());
     }
 }

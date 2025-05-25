@@ -7,8 +7,13 @@ import static menus.menuAdmin.adminMenu;
 import static utils.console.cleanConsole;
 import static utils.console.stop;
 import static utils.files.fileToMatrix;
+import static utils.print.headerAdmin;
 
-public class loginAdmin {
+/**
+ * This class manages the login functionality for admin users.
+ */
+public class loginAdmin { // Class name should follow PascalCase convention. OK here.
+
     /**
      * Main method used for testing the admin login functionality.
      *
@@ -16,7 +21,7 @@ public class loginAdmin {
      * @throws FileNotFoundException if the admin login file is not found
      */
     public static void main(String[] args) throws FileNotFoundException {
-        adminLogin();
+        adminLogin(); // Start admin login process
     }
 
     /**
@@ -30,40 +35,35 @@ public class loginAdmin {
      */
     public static void adminLogin() throws FileNotFoundException {
         Scanner input = new Scanner(System.in);
-        String loginAdmin = "IMDV/IMDV_AdminLogin.csv";
-        String splitter = ";";
-        String[][] loginMatrix = fileToMatrix(loginAdmin, splitter, 2);
+        String loginAdmin = "IMDV/IMDV_AdminLogin.csv"; // Path to CSV file containing login credentials
+        String splitter = ";"; // Delimiter used in the CSV
+        String[][] loginMatrix = fileToMatrix(loginAdmin, splitter, 2); // Convert CSV to 2D array (username-password pairs)
         String username = "";
         String password = "";
-        int flag = 0;
+        int flag = 0; // Used to control error message display
 
         do {
-            if (flag == 1){                                         // flag to show the warning only when the user fails
-                cleanConsole();
-                System.out.println("================================ IMDV ================================");
-                System.out.println("____________________            ADMIN             ____________________");
-                System.out.println("\n\n                                 LOGIN\n");
-                System.out.println("\n                     ERROR!: PASSWORD/LOGIN - FAILED ");
-                stop();                                                              // waits for user input to continue
+            if (flag == 1){ // Only show error message after a failed login attempt
+                headerAdmin();
+                System.out.println("\n\n                                      LOGIN\n");
+                System.out.println("\n                        ERROR!: PASSWORD/LOGIN - FAILED ");
+                stop(); // Waits for user to press enter before retry
             }
-            cleanConsole();
-                                                                                                 // Login menu for admin
-            System.out.println("================================ IMDV ================================");
-            System.out.println("____________________            ADMIN             ____________________");
-            System.out.print("\n                        Utilizador: ");
-            username = input.nextLine();
-            System.out.print("\n                          Password: ");
-            password = input.nextLine();
-            flag = 1;
-        }while(!validUserPassword(loginMatrix, username, password));
-                                                                                                      // Success message
-        cleanConsole();
-        System.out.println("================================ IMDV ================================");
-        System.out.println("____________________            ADMIN             ____________________");
-        System.out.println("\n\n                                 LOGIN\n");
-        System.out.println("\n                       Login Efetuado com sucesso ");
-        stop();                                                                      // waits for user input to continue
-        adminMenu();                                                                          // redirects to admin menu
+
+            // Display login prompt
+            headerAdmin();
+            System.out.print("\n                           Utilizador: ");
+            username = input.nextLine(); // Read username input
+            System.out.print("\n                             Password: ");
+            password = input.nextLine(); // Read password input
+            flag = 1; // Set flag to show error message next time if login fails
+        } while(!validUserPassword(loginMatrix, username, password)); // Repeat until valid credentials are entered
+        // Login success message
+        headerAdmin();
+        System.out.println("\n\n                                      LOGIN\n");
+        System.out.println("\n                           Login Efetuado com sucesso ");
+        stop(); // Wait for user before proceeding
+        adminMenu(); // Redirect to admin menu
     }
 
     /**
@@ -82,12 +82,13 @@ public class loginAdmin {
         while (x < loginMatrix.length){
             y = 0;
             while (y < loginMatrix[x].length){
+                // Check if username and its corresponding password match
                 if (loginMatrix[x][y].equals(username) && loginMatrix[x][y+1].equals(password))
                     return true;
                 y++;
             }
             x++;
         }
-        return false;
+        return false; // No matching credentials found
     }
 }

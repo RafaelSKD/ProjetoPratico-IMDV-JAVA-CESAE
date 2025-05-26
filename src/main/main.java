@@ -6,31 +6,31 @@ import static menus.login.loginMenu;
 import static menus.loginMenuDispatcher.loginDispatcher;
 import static pages.welcomePage.welcome;
 
-public class
-main {
+/**
+ * Main class responsible for launching the application.
+ */
+public class main {
+
     /**
-     * Main method that starts the application by displaying the welcome screen and
-     * directing the user to the appropriate login flow (admin or client).
+     * Initial entry point of the program.
      *
-     * @param args command-line arguments (not used)
+     * @param args command-line arguments (not used in this application)
      * @throws FileNotFoundException if any required file for login is not found
      */
     public static void main(String[] args) throws FileNotFoundException {
-        welcome();
-        loginDispatcher(loginMenu());
+        secondMain(); // Redirect to secondMain for flexibility in relaunching the app
     }
 
     /**
-     * Duplicate entry point for restarting the application flow without requiring command-line arguments.
+     * Secondary entry point used to restart the application flow internally.
      *
-     * Displays the welcome screen and redirects the user to the appropriate login flow.
-     * Useful for internal redirection (e.g., after logout) within the application.
+     * Displays the welcome screen and then dispatches to the login menu logic.
+     * Useful for redirecting the user after logout or session reset.
      *
      * @throws FileNotFoundException if any required file for login is not found
      */
-
     public static void secondMain() throws FileNotFoundException {
-        welcome();
-        loginDispatcher(loginMenu());
+        welcome(); // Show welcome banner
+        loginDispatcher(loginMenu()); // Launch login menu and handle routing
     }
 }

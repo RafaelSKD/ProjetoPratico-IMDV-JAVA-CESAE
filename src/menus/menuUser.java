@@ -37,20 +37,20 @@ public class menuUser { // Class name should follow PascalCase: "MenuUser"
 
         do {
             headerUser();
-            headerMenu();
             System.out.println("\n\n                          Escolha a forma da procura:\n");
-            System.out.println("                    #1- Imprimir Catálogo");
-            System.out.println("                    #2- Imprimir Catálogos Gráficos");
-            System.out.println("                    #3- Imprimir Melhor Estúdio");
-            System.out.println("                    #4- Imprimir Pior Estúdio");
-            System.out.println("                    #5- Imprimir Crítica Mais Recente");
-            System.out.println("                    #6- Quiz");
-            System.out.println("                    #7- Imprimir Catálogo Estúdio");
-            System.out.println("                    #8- Imprimir Catálogo Categoria");
-            System.out.println("\n                    #0- Logout");
+            System.out.println("                    #1- Imprimir Catálogo 📚");
+            System.out.println("                    #2- Imprimir Catálogos Gráficos 📊");
+            System.out.println("                    #3- Imprimir Melhor Estúdio 🏆");
+            System.out.println("                    #4- Imprimir Pior Estúdio 💔");
+            System.out.println("                    #5- Imprimir Crítica Mais Recente 📝");
+            System.out.println("                    #6- Imprimir Crítica Do Filme mais Recente 🆕");
+            System.out.println("                    #7- Quiz 🎯");
+            System.out.println("                    #8- Imprimir Catálogo Estúdio 🏢");
+            System.out.println("                    #9- Imprimir Catálogo Categoria 🎭");
+            System.out.println("\n                    #0- Logout 🚪");
             System.out.print("\n                    Opcao: ");
             option = input.nextInt();
-        } while (option < 0 || option > 8); // Input validation
+        } while (option < 0 || option > 9); // Input validation
         if (option == 0) // Logout to main screen
             secondMain();
         userMenuDispacher(option); // Dispatch selected option
@@ -87,12 +87,16 @@ public class menuUser { // Class name should follow PascalCase: "MenuUser"
                 stop();
                 break;
             case 6:
-                quiz(); // Launch quiz feature
+                printMostRecentMovieRating(src); // prints the rating of most recent movie
+                stop();
                 break;
             case 7:
-                printFilter(src, "studio"); // Prints all movies filter by studio
+                quiz(); // Launch quiz feature
                 break;
             case 8:
+                printFilter(src, "studio"); // Prints all movies filter by studio
+                break;
+            case 9:
                 printFilter(src, "category"); // Prints all movies filter by category
                 break;
         }
@@ -101,73 +105,162 @@ public class menuUser { // Class name should follow PascalCase: "MenuUser"
     }
 
     /**
-     * Filters and prints movies from the data file based on studio or category (genre).
+     * Prints the most recent movie (based on the release year) and its rating from the data file.
      *
-     * @param src    the path to the CSV file
-     * @param filter the filter type: "studio" or "category"
+     * @param src the path to the movie CSV file
      * @throws FileNotFoundException if the file cannot be found
      */
+    private static void printMostRecentMovieRating(String src) throws FileNotFoundException {
+        String[][] data = fileToMatrix(src, ";", 8); // Read file into matrix (8 columns)
+
+        int mostRecentYear = Integer.MIN_VALUE;
+        int mostRecentIndex = -1;
+
+        for (int i = 1; i < data.length; i++) { // Skip header = 1
+            int year = Integer.parseInt(data[i][4]); // Column 4 = year
+            if (year > mostRecentYear) {
+                mostRecentYear = year;
+                mostRecentIndex = i;
+            }
+        }
+
+        if (mostRecentIndex != -1) {
+            String title = data[mostRecentIndex][1];   // Column 1 = title
+            String rating = data[mostRecentIndex][2];  // Column 2 = rating
+            String year = data[mostRecentIndex][4];    // Column 4 = year
+
+            headerUser();
+            System.out.println("\n\n                         🎬 Filme mais recente avaliado:\n");
+            System.out.println("                           - 🎬 Título : " + title);
+            System.out.println("                           - 📆 Ano   : " + year);
+            System.out.println("                           - ⭐ Rating : " + rating);
+        }
+    }
+
+
+    /**
+     * Filters and prints a list of movies based on the selected filter:
+     * either by studio (grouped by genre) or by genre (listing all matching titles).
+     *
+     * @param src    the path to the CSV file containing movie data
+     * @param filter the filter type selected by the user: "studio" or "category"
+     * @throws FileNotFoundException if the CSV file cannot be located
+     */
     public static void printFilter(String src, String filter) throws FileNotFoundException {
-        Scanner input = new Scanner(System.in);
-        String[][] data = fileToMatrix(src, ";", 8);
-        headerUser();
+        Scanner input = new Scanner(System.in); // Read user input
+        String[][] data = fileToMatrix(src, ";", 8); // Read file into matrix (8 columns)
+        headerUser(); // Display user UI header
         String option;
         int[] index;
 
         if (filter.equals("studio")) {
             System.out.println("\n\n                    Qual o Estudio que deseja ver o catalogo?");
-            System.out.print("\n                             Estudio: ");
-            option = input.nextLine();
-            index = findPositionOccurrencesInMatrix(data, option, 5); // Studio column = 5
-            printContentFilteredByIndex(data, index, 1, 2, 3, 4, 6, 7);
-            stop();
+            System.out.print("\n                             🏢 Estudio: ");
+            option = input.nextLine(); // Read studio name from user
+            index = findPositionOccurrencesInMatrix(data, option, 5); // Column 5 = studio
+
+            // Print all movies from this studio grouped by genre
+            printContentByStudioGroupedByCategory(data, index);
+            stop(); // Pause before returning
         }
 
         if (filter.equals("category")) {
             System.out.println("\n\n                    Qual o genero que deseja ver o catalogo?");
-            System.out.print("\n                             Genero: ");
-            option = input.nextLine();
-            index = findPositionOccurrencesInMatrix(data, option, 7); // Category column = 7
-            printContentFilteredByIndex(data, index, 1, 2, 3, 4, 6, 5);
-            stop();
+            System.out.print("\n                             🎭 Genero: ");
+            option = input.nextLine(); // Read genre name from user
+            index = findPositionOccurrencesInMatrix(data, option, 7); // Column 7 = genre
+
+            // Print all movies of this genre
+            printContentByCategoryOnly(data, index);
+            stop(); // Pause before returning
         }
     }
 
     /**
-     * Prints specific fields of selected rows from a data matrix, using column headers.
+     * Prints movie titles grouped by category (genre) for a given studio.
+     * Only categories present within the selected studio are printed.
      *
-     * @param data         the full data matrix, including headers in row 0
-     * @param index        array of row indices to print (e.g., [2, 4, 5])
-     * @param contentIndex array of column indices to display for each selected row
+     * @param data  the full data matrix, including headers in row 0
+     * @param index array of row indices where the studio matches the selected one
      */
-    private static void printContentFilteredByIndex(String[][] data, int[] index, int... contentIndex) {
+    private static void printContentByStudioGroupedByCategory(String[][] data, int[] index) {
+        String[] categories = new String[index.length]; // Tracks printed categories to avoid duplicates
+        int y = 0, flag;
+
+        System.out.println("\n");
+
         for (int i = 0; i < index.length; i++) {
-            int rowIndex = index[i]; // Get the row index to print
-            for (int j = 0; j < contentIndex.length; j++) {
-                int colIndex = contentIndex[j]; // Get the column index to print
-                System.out.print("\n   - " + data[0][colIndex] + " : " + data[rowIndex][colIndex]); // Print header and value
+            String category = data[index[i]][7]; // Column 7 = genre
+
+            flag = 0;
+            // Check if this category has already been printed
+            for (int j = 0; j < y; j++) {
+                if (categories[j].equals(category)) {
+                    flag = 1; // Found a duplicate
+                    break;
+                }
             }
-            System.out.println("\n\n"); // Add spacing between rows
+
+            if (flag == 0) {
+                categories[y++] = category; // Register new unique category
+                System.out.println("\n                                   🍿 " + category + ":\n");
+
+                // Print all titles in the same category
+                for (int k = 0; k < index.length; k++) {
+                    if (data[index[k]][7].equals(category)) { // Match category
+                        System.out.println("           - " + data[index[k]][1]); // Column 1 = movie title
+                    }
+                }
+            }
         }
     }
 
     /**
-     * Reads the last line from the given CSV file and prints it as the most recent rating entry.
+     * Prints a list of movie titles that belong to a specific category (genre).
+     * Assumes all given indices belong to the same category, which is shown as a section header.
+     *
+     * @param data  the full data matrix, including headers in row 0
+     * @param index array of row indices where the category matches the selected one
+     */
+    private static void printContentByCategoryOnly(String[][] data, int[] index) {
+        System.out.println("\n");
+
+        if (index.length > 0) {
+            String category = data[index[0]][7]; // Column 7 = category (genre)
+            System.out.println("\n                                   🍿 " + category + ":\n");
+
+            for (int i = 0; i < index.length; i++) {
+                System.out.println("           - " + data[index[i]][1]); // Column 1 = movie title
+            }
+        }
+    }
+
+
+    /**
+     * Prints the most recent movie rating from the last row of the data file.
      *
      * @param src the path to the CSV file
      * @throws FileNotFoundException if the file cannot be found
      */
     private static void printMostRecentRating(String src) throws FileNotFoundException {
-        File file = new File(src);
-        Scanner scanner = new Scanner(file);
-        String lastLine = "";
+        String[][] data = fileToMatrix(src, ";", 8); // Read data into matrix
+        int lastIndex = data.length - 1; // Last row (excluding header)
 
-        while (scanner.hasNextLine()) {
-            lastLine = scanner.nextLine(); // Store last line
+        if (lastIndex > 0) {
+            String title = data[lastIndex][1];   // Column 1 = Title
+            String rating = data[lastIndex][2];  // Column 2 = Rating
+            String year = data[lastIndex][4];    // Column 4 = Year
+            String studio = data[lastIndex][5];  // Column 5 = Studio
+            String genre = data[lastIndex][7];   // Column 7 = Genre
+
+            headerUser();
+            System.out.println("\n                         📝 Última crítica adicionada:\n");
+            System.out.println("                         - 🎬 Título  : " + title);
+            System.out.println("                         - ⭐ Rating  : " + rating);
+            System.out.println("                         - 📆 Ano    : " + year);
+            System.out.println("                         - 🏢 Estúdio: " + studio);
+            System.out.println("                         - 🎭 Género : " + genre);
         }
-        scanner.close();
-        headerUser();
-        System.out.println("\n\nCrítica mais recente:\n" + lastLine);
     }
 
     /**
@@ -226,10 +319,10 @@ public class menuUser { // Class name should follow PascalCase: "MenuUser"
 
         headerUser();
         if (extreme.equals("max"))
-            System.out.println("\n\n     O estúdio com maior classificação é " + averageRating[line][0] + " com " +
+            System.out.println("\n\n           🏆 O estúdio com maior classificação é " + averageRating[line][0] + " com " +
                     averageRating[line][1] + ".");
         if (extreme.equals("min"))
-            System.out.println("\n\n     O estúdio com menor classificação é " + averageRating[line][0] + " com " +
+            System.out.println("\n\n          💔 O estúdio com menor classificação é " + averageRating[line][0] + " com " +
                     averageRating[line][1] + ".");
     }
 
@@ -262,11 +355,11 @@ public class menuUser { // Class name should follow PascalCase: "MenuUser"
             headerUser();
             headerMenu();
             System.out.println("\n\n                          Escolha o filme que procura:\n");
-            System.out.println("                          #1- Harry Potter");
-            System.out.println("                          #2- Interstellar");
-            System.out.println("                          #3- Lord of The Rings");
-            System.out.println("                          #4- Star Wars");
-            System.out.println("\n                          #0- Voltar");
+            System.out.println("                          #1- 🧙‍♂️ Harry Potter");
+            System.out.println("                          #2- 🚀 Interstellar");
+            System.out.println("                          #3- 💍 Lord of The Rings");
+            System.out.println("                          #4- 🌌 Star Wars");
+            System.out.println("\n                          #0- 🔙 Voltar");
             System.out.print("\n                          Opcao: ");
             option = input.nextInt();
         } while (option < 0 || option > 4);

@@ -33,12 +33,12 @@ public class login { // Class name should follow PascalCase naming convention (e
             headerLogin(); // Prints a formatted header for the login screen
 
             // Display login options to the user
-            System.out.println("\n\n                         Iniciar conta com login de:\n\n" +
-                    "                          1# ADMINISTRADOR\n" +
-                    "                          2# CLIENTE" +
-                    "\n\n                          0# ENCERRAR");
+            System.out.println("\n\n                          Iniciar conta com login de:\n\n" +
+                    "                              1# ADMINISTRADOR 🛠️\n" +
+                    "                              2# CLIENTE 👤" +
+                    "\n\n                              0# ENCERRAR ❌");
 
-            System.out.print("\n\n                         Escolha uma opcao: ");
+            System.out.print("\n\n                          Escolha uma opcao: ");
             option = input.nextInt(); // Read user's choice
         } while(option < 0 || option > 2); // Ensures the input is within the valid range (0–2)
 

@@ -38,7 +38,7 @@ public class loginUser {
         headerUser(); // Display user login header
 
         // Prompt user for account registration information
-        System.out.print("\n                            Efetuar novo registo\n\n" +
+        System.out.print("\n                              Efetuar novo registo\n\n" +
                 "      Insira um nome de utilizador: ");
         String user = input.nextLine();
 
@@ -71,7 +71,7 @@ public class loginUser {
      */
     public static void successMensageLogin(String user, String password, String name, String contact, String email){
         headerUser(); // Display user header again for consistency
-        System.out.print("\n                     Registo efetuado com sucesso! ✔\n" +
+        System.out.print("\n                         Registo efetuado com sucesso! ✔\n" +
                 "\n           Nome de utilizador = " + user +
                 "  \n                     Password = " + password + "  \n" +
                 "\n                         Nome = " + name +

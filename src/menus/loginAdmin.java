@@ -46,7 +46,7 @@ public class loginAdmin { // Class name should follow PascalCase convention. OK 
             if (flag == 1){ // Only show error message after a failed login attempt
                 headerAdmin();
                 System.out.println("\n\n                                      LOGIN\n");
-                System.out.println("\n                        ERROR!: PASSWORD/LOGIN - FAILED ");
+                System.out.println("\n                      ⚠️ ERROR!: PASSWORD/LOGIN - FAILED ");
                 stop(); // Waits for user to press enter before retry
             }
 
@@ -61,7 +61,7 @@ public class loginAdmin { // Class name should follow PascalCase convention. OK 
         // Login success message
         headerAdmin();
         System.out.println("\n\n                                      LOGIN\n");
-        System.out.println("\n                           Login Efetuado com sucesso ");
+        System.out.println("\n                         ✅ Login Efetuado com sucesso ");
         stop(); // Wait for user before proceeding
         adminMenu(); // Redirect to admin menu
     }

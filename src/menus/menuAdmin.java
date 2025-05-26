@@ -40,11 +40,11 @@ public class menuAdmin { // Class name should follow PascalCase: "MenuAdmin"
             headerMenu(); // Display generic menu header
 
             // Display admin menu options
-            System.out.println("\n\n                               Escolha:\n");
-            System.out.println("                    #1- Consulta de Ficheiros");
-            System.out.println("                    #2- Total de Ratings");
-            System.out.println("                    #3- Imprimir Todos os Estúdios");
-            System.out.println("\n                    #0- Logout");
+            System.out.println("\n\n                                     Escolha:\n");
+            System.out.println("                      #1- Consulta de Ficheiros 📂");
+            System.out.println("                      #2- Total de Ratings 🔢");
+            System.out.println("                      #3- Imprimir Todos os Estúdios 🏢");
+            System.out.println("\n                      #0- Logout 🚪");
 
             System.out.print("\n                    Opcao: ");
             option = input.nextInt(); // Read selected option

@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 import static main.main.secondMain;
+import static menus.loginUser.userLogin;
 import static pages.quiz.quiz;
 import static utils.arrays.*;
 import static utils.console.cleanConsole;
@@ -38,19 +39,20 @@ public class menuUser { // Class name should follow PascalCase: "MenuUser"
         do {
             headerUser();
             System.out.println("\n\n                          Escolha a forma da procura:\n");
-            System.out.println("                    #1- Imprimir Catálogo 📚");
-            System.out.println("                    #2- Imprimir Catálogos Gráficos 📊");
-            System.out.println("                    #3- Imprimir Melhor Estúdio 🏆");
-            System.out.println("                    #4- Imprimir Pior Estúdio 💔");
-            System.out.println("                    #5- Imprimir Crítica Mais Recente 📝");
-            System.out.println("                    #6- Imprimir Crítica Do Filme mais Recente 🆕");
-            System.out.println("                    #7- Quiz 🎯");
-            System.out.println("                    #8- Imprimir Catálogo Estúdio 🏢");
-            System.out.println("                    #9- Imprimir Catálogo Categoria 🎭");
+            System.out.println("                    #1- Registar Novo Utilizador ⭐");
+            System.out.println("                    #2- Imprimir Catálogo 📚");
+            System.out.println("                    #3- Imprimir Catálogos Gráficos 📊");
+            System.out.println("                    #4- Imprimir Melhor Estúdio 🏆");
+            System.out.println("                    #5- Imprimir Pior Estúdio 💔");
+            System.out.println("                    #6- Imprimir Crítica Mais Recente 📝");
+            System.out.println("                    #7- Imprimir Crítica Do Filme mais Recente 🆕");
+            System.out.println("                    #8- Quiz 🎯");
+            System.out.println("                    #9- Imprimir Catálogo Estúdio 🏢");
+            System.out.println("                    #10- Imprimir Catálogo Categoria 🎭");
             System.out.println("\n                    #0- Logout 🚪");
             System.out.print("\n                    Opcao: ");
             option = input.nextInt();
-        } while (option < 0 || option > 9); // Input validation
+        } while (option < 0 || option > 10); // Input validation
         if (option == 0) // Logout to main screen
             secondMain();
         userMenuDispacher(option); // Dispatch selected option
@@ -68,35 +70,38 @@ public class menuUser { // Class name should follow PascalCase: "MenuUser"
 
         switch (option){
             case 1:
+                userLogin();
+                break;
+            case 2:
                 printContentListOf(src, splitter, 1, 2);  // print all movies with ratings
                 stop();
                 break;
-            case 2:
+            case 3:
                 graphicMenu(); // Navigates to graphic submenu
                 break;
-            case 3:
+            case 4:
                 printExtremesInFile(src, splitter, "max");  // print best studio by ratings
                 stop();
                 break;
-            case 4:
+            case 5:
                 printExtremesInFile(src, splitter, "min");  // print worst studio by ratings
                 stop();
                 break;
-            case 5:
+            case 6:
                 printMostRecentRating(src); // prints the last entry
                 stop();
                 break;
-            case 6:
+            case 7:
                 printMostRecentMovieRating(src); // prints the rating of most recent movie
                 stop();
                 break;
-            case 7:
+            case 8:
                 quiz(); // Launch quiz feature
                 break;
-            case 8:
+            case 9:
                 printFilter(src, "studio"); // Prints all movies filter by studio
                 break;
-            case 9:
+            case 10:
                 printFilter(src, "category"); // Prints all movies filter by category
                 break;
         }

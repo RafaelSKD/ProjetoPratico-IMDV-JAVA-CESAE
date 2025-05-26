@@ -23,6 +23,7 @@ The program reads data from CSV files and includes a full-featured user experien
 
 ## 🧩 Main Features
 
+
 ### 👤 User Selection
 
 - Program starts by asking for user type: `ADMIN` or `CLIENT`
@@ -33,6 +34,10 @@ The program reads data from CSV files and includes a full-featured user experien
 
 ### 🛠️ Admin Menu
 
+<p align="center">
+  <img src="https://i.imgur.com/SiubQDb.png" alt="Demonstração">
+</p>
+
 1. View full CSV file content  
 2. Count total ratings  
 3. Display all reviewed studios (no duplicates)  
@@ -40,6 +45,9 @@ The program reads data from CSV files and includes a full-featured user experien
 ---
 
 ### 🎟️ Client Menu
+<p align="center">
+  <img src="https://i.imgur.com/ZTSybpD.png" alt="Demonstração">
+</p>
 
 1. Register new user (username, contact, email)  
 2. View full movie catalog with ratings  
@@ -47,9 +55,10 @@ The program reads data from CSV files and includes a full-featured user experien
 4. Display the highest-rated studio  
 5. Display the lowest-rated studio  
 6. View most recent review  
-7. Take a movie quiz based on CSV questions (scored)  
-8. Search by Studio → show all genres and movies by that studio  
-9. Search by Genre → show all studios and related movies  
+7. View most recent movie review  
+8. Take a movie quiz based on CSV questions (scored)  
+9. Search by Studio → show all genres and movies by that studio  
+10. Search by Genre → show all studios and related movies
 
 ---
 
@@ -63,17 +72,6 @@ The program reads data from CSV files and includes a full-featured user experien
 
 ## 💬 Example Interaction
 
-```text
-> User Type (ADMIN || CLIENT): ADMIN  
-> USERNAME: chefe  
-> PASSWORD: pass123  
-> Incorrect password  
->  
-> USERNAME: chefe  
-> PASSWORD: !password?456  
-> Login successful  
->  
-> ADMIN MENU  
-> 1. View File  
-> 2. Count Ratings  
-...
+<p align="center">
+  <img src="https://i.imgur.com/I4JjOBj.gif" alt="Demonstração">
+</p>

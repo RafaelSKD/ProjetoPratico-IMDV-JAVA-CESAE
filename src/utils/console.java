@@ -16,7 +16,7 @@ public class console {
      */
     public static void stop(){
         Scanner input = new Scanner(System.in);
-        System.out.print("\n\n\nPrecionar qualquer tecla para continuar...  ");       // Wait for user input to continue
+        System.out.print("\n\n\nPressionar qualquer tecla para continuar...  ");       // Wait for user input to continue
         input.next();
     }
 }
